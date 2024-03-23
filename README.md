@@ -1,6 +1,6 @@
-# Francescababiloni.github.io/AdaptiveSpiral
+# FrancescaBabiloni.github.io/AdaptiveSpiral
 
-This is the repository that contains source code for the [https://fb2221.github.io/AdaptiveSpiral](https://Francescababiloni.github.io).
+This is the repository that contains source code for the [https://FrancescaBabiloni.github.io/AdaptiveSpiral](https://FrancescaBabiloni.github.io/AdaptiveSpiral).
 
 If you find DFC useful for your work please cite:
 ```
