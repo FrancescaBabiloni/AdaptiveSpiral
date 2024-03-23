@@ -1,0 +1,657 @@
+<!DOCTYPE html> 
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Adaptive Spiral Layers for Efficient 3D Representation Learning on Meshes.">
+  <meta name="keywords" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adaptive Spiral Layers for Efficient 3D Representation Learning on Meshes</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    } 
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.1.1/model-viewer.min.js"></script>
+</head>
+<body>
+
+
+<!-- THIS IS THE HOME BUTTON AND DROPDOWN MENU WITH THE LINKS TO RELATED PAPERS FROM SAME AUTHORS (IT IS COMMENTED)
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://github.com/Fb2221/Fb2221.github.io">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+            <a class="navbar-item" href="https://nerfies.github.io">
+              Nerfies
+            </a>
+            <a class="navbar-item" href="https://latentfusion.github.io">
+              LatentFusion
+            </a>
+            <a class="navbar-item" href="https://photoshape.github.io">
+              PhotoShape
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav>
+ END OF HOME BUTTON AND DROPDOWN MENU-->
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Adaptive Spiral Layers for Efficient 3D Representation Learning on Meshes</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              Francesca Babiloni<sup>1,2</sup>,</span>
+            <span class="author-block">
+              Matteo Maggioni</a><sup>1</sup>,</span>
+            <span class="author-block">
+              Thomas Tanay</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              Jiankang Deng</a><sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+              Ales Leonardis</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              Stefanos Zafeiriou</a><sup>2</sup>
+              <!-- <a href="https://homes.cs.washington.edu/~seitz/">Stefanos Zafeiriou</a><sup>2</sup> -->
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Huawei, Noah’s Ark Lab,</span>
+            <span class="author-block"><sup>2</sup>Imperial College London</span>
+          </div>
+
+      <!-- BUTTONS WITH 1)PDF LINK 2)ARXIVE LINK 3)VIDEO LINK 4)CODE LINK 5)DATA LINK
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!~~ PDF Link. ~~>
+              QUESTI LINK SONO DA AGGIUSTARE TUTTI
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!~~ Video Link. ~~>
+              <span class="link-block">
+                <a href="https://youtube.com"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!~~ Code Link. ~~>
+              <span class="link-block">
+                <a href="https://github.com/Fb2221/Fb2221.github.io"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!~~ Dataset Link. ~~>
+              <span class="link-block">
+                <a href="https://github.com/google/nerfies/releases/tag/0.1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+            </div>
+
+          </div>
+       BUTTONS WITH 1)PDF LINK 2)ARXIVE LINK 3)VIDEO LINK 4)CODE LINK 5)DATA LINK -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <div style="display: flex; justify-content: center; align-items: center; margin-top: -50px;"> <!--  height: 100vh; -->
+    <div style="display: flex; justify-content: space-between;"text-align: center;">
+
+        <model-viewer id="model2" style="height: 300px;" src="./static/meshes/hand_ours_all_repositioned.glb" camera-controls poster="poster.webp" shadow-intensity="1" auto-rotate auto-rotate-speed="120" min-camera-orbit="-90deg 90deg auto" max-camera-orbit="-90deg 90deg auto" camera-orbit="0deg 90deg auto" field-of-view="30deg" interaction-prompt="none">
+            <div class="progress-bar hide" slot="progress-bar">
+                <div class="update-bar"></div>
+            </div>
+        </model-viewer>
+      
+       <model-viewer id="model1" style="height: 300px;" src="./static/meshes/head_ours_all_repositioned.glb" camera-controls poster="poster.webp" shadow-intensity="1" auto-rotate auto-rotate-speed="120" min-camera-orbit="-90deg 90deg auto" max-camera-orbit="0deg 0deg auto" camera-orbit="45deg 90deg auto" field-of-view="30deg" interaction-prompt="none">
+            <div class="progress-bar hide" slot="progress-bar">
+                <div class="update-bar"></div>
+            </div>
+        </model-viewer>
+
+        <model-viewer id="model3" style="height: 300px;" src="./static/meshes/faust_rf/body_ours_l3_spiral/body_ours_l3_spiral_repositioned.glb" camera-controls poster="poster.webp" shadow-intensity="1" auto-rotate auto-rotate-speed="120" min-camera-orbit="-90deg 90deg auto" max-camera-orbit="45deg 90deg auto" camera-orbit="285deg 90deg auto" field-of-view="30deg" interaction-prompt="none">
+            <div class="progress-bar hide" slot="progress-bar">
+                <div class="update-bar"></div>
+            </div>
+        </model-viewer>
+    </div>
+  </div>
+  <div class="container is-max-desktop" style="text-align: center; width: 730px; margin-top: 20px;">
+    <p>We propose "Adaptive-Spiral", a new 3D operator that adapts its weights to each mesh and learns vertex-adaptive and mesh-adaptive spiral sequences of variable lengths.</p>
+
+</div>
+  
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            The success of deep learning models on structured data has generated significant 
+            interest in extending their application to non-Euclidean domains. 
+          </p>
+          <p>
+            In this work, we introduce a novel intrinsic operator suitable for representation learning on 3D meshes.
+            Our operator is specifically tailored to adapt its behavior to the irregular 
+            structure of the underlying graph and effectively utilizes its long-range dependencies, 
+            while at the same time ensuring computational efficiency and ease of optimization.
+          </p>
+          <p>
+            In particular, inspired by the framework of Spiral Convolution, which extracts and 
+            transforms the vertices in the 3D mesh following a local spiral ordering, we propose 
+            a general operator that dynamically adjusts the length of the spiral trajectory and the 
+            parameters of the transformation for each processed vertex and mesh. 
+          </p>
+          <p>
+            Then, we use polyadic decomposition to factorize its dense weight tensor into a sequence 
+            of lighter linear layers that separately process features and vertices information, hence 
+            significantly reducing the computational complexity without introducing any stringent inductive biases. 
+            Notably, we leverage dynamic gating to achieve spatial adaptivity and induce global reasoning 
+            with constant time complexity benefitting from an efficient dynamic pooling mechanism based 
+            on Summed-Area-tables. 
+          </p>
+          <p>
+            Used as a drop-in replacement on existing architectures for shape 
+            correspondence our operator significantly improves the performance-efficiency trade-off, 
+            and in 3D shape generation with morphable models achieves state-of-the-art performance with 
+            a three-fold reduction in the number of parameters required.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <br>
+    
+    <!-- Paper video.-->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video" style="margin:auto; maxwidth:75%">
+    <!--      
+    <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    -->
+           <video id="video_paper" controls playsinline">
+            <source src="./static/5188_video.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+   <!-- Paper video. -->
+  </div>
+</section>
+
+
+<section class="section" id="implementation">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Implementation</h2>
+      <div class="center">
+        <img src="./static/images/paper/Block.png" alt="Image Description" style="display: block; margin-left: auto; margin-right: auto; width: 735px">
+        <p class="caption" style= "text-align:center; width:730px; margin: auto">Its implementation requires only a set of differentiable building blocks that can work as a drop-in replacement in existing mesh-processing architectures.</p>
+    </div>
+  </div>
+</section>
+
+
+
+
+    
+
+
+<!-- MODELS SIDE BY SIDE
+ <div style="display: flex; justify-content: center; align-items: center; margin-top: -10px;">
+    <div style="display: flex; justify-content: space-between;">
+        <model-viewer alt="Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum" 
+          src="./static/meshes/color.glb" style="width: 300px; height: 300px;
+          poster="shared-assets/models/NeilArmstrong.webp" 
+          shadow-intensity="1" camera-controls touch-action="pan-y" min-camera-orbit="auto 90deg auto" max-camera-orbit="auto 90deg auto">
+        </model-viewer>
+
+      <model-viewer alt="Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum" 
+          src="./static/meshes/mesh_all.glb" style="width: 300px; height: 300px;
+          poster="shared-assets/models/NeilArmstrong.webp" 
+          shadow-intensity="1" camera-controls touch-action="pan-y" min-camera-orbit="auto 90deg auto" max-camera-orbit="auto 90deg auto">
+        </model-viewer>
+    </div>
+</div>
+  
+MODELS SIDE BY SIDE -->
+
+
+
+
+<section class="section" id="3d_correspondence">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3" >3D Shape Correspondence</h2>
+   <div class="slideshow-container">
+
+  <!-- Full-width images with number and caption text -->
+  <div class="mySlides fade">
+    <div class="numbertext">1 / 3</div>
+    <img src="./static/images/paper/FAUST_original.jpg" style="width:100%">
+    <div class="text">FAUST</div>
+  </div>
+
+  <div class="mySlides fade">
+    <div class="numbertext">2 / 3</div>
+    <img src="./static/images/paper/FAUST_RM.jpg" style="width:100%">
+    <div class="text">FAUST-Remeshed</div>
+  </div>
+
+  <div class="mySlides fade">
+    <div class="numbertext">3 / 3</div>
+    <img src="./static/images/paper/SCAPE_RM.jpg" style="width:100%">
+    <div class="text">SCAPE-Remeshed</div>
+  </div>
+
+  <!-- Next and previous buttons -->
+  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+<br>
+
+<!-- The dots/circles -->
+<div style="text-align:center">
+  <span class="dot" onclick="currentSlide(1)"></span>
+  <span class="dot" onclick="currentSlide(2)"></span>
+  <span class="dot" onclick="currentSlide(3)"></span>
+</div>
+
+
+<script>
+let slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+}
+</script>
+  </div>
+</section>
+
+
+  
+
+
+
+
+  
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- TWO COLUMNS CONTAINER
+    <div class="columns is-centered">
+      
+    <!~~ Visual Effects. ~~>
+      <div class="column">
+        <div class="content">
+          <h2 class="title is-3">Visual Effects</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/dollyzoom-stacked.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <!~~/ Visual Effects. ~~>
+
+      <!~~ Matting. ~~>
+      <div class="column">
+        <h2 class="title is-3">Matting</h2>
+        <div class="columns is-centered">
+          <div class="column content">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+            <video id="matting-video" controls playsinline height="100%">
+              <source src="./static/videos/matting.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!~~/ Matting. ~~>
+TWO COLUMNS CONTAINER -->
+    
+    <!-- Animation. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">3D Shape Reconstruction</h2>
+
+        <!-- Interpolating. -->
+        <h3 class="title is-4">Interpolating Latent States</h3>
+<div class="content has-text-justified">
+  <p>
+    An Adaptive-Spiral 3D Morphable Model generates new realistic representations, and can transition from one expression to another via latent-space interpolation.
+  </p>
+</div>
+<div class="columns is-vcentered interpolation-panel" style="width: 769px; margin: 0 auto;">
+  <!-- Original Images -->
+  <div class="column is-3 has-text-centered">
+    <img src="./static/images/interpolate_start.jpg" style="width: 175px;"
+         class="interpolation-image"
+         alt="Interpolate start reference image."/>
+    <p>Mouth Extreme</p>
+  </div>
+  <div class="column interpolation-video-column"> 
+    <div id="interpolation-image-wrapper" style="width: 175px;margin-left: 30px;margin-right: 30px;">      
+      Loading...
+    </div>
+    <input class="slider is-fullwidth is-large is-info"
+           id="interpolation-slider" style="left: 5px"
+           step="1" min="0" max="100" value="0" type="range">
+  </div>
+  <div class="column is-3 has-text-centered">
+    <img src="./static/images/interpolate_end.jpg" style="width: 175px"
+         class="interpolation-image"
+         alt="Interpolation end reference image."/>
+    <p class="is-bold">Cheeks In</p>
+  </div>
+</div>
+
+<!-- New Images -->
+<div class="columns is-vcentered interpolation-panel"style="width: 769px; margin: 0 auto;">
+  <div class="column is-3 has-text-centered">
+    <img src="./static/images/interpolate_start2.jpg" style="width: 175px;"
+         class="interpolation-image"
+         alt="Interpolate start reference image."/>
+    <p>Eyebrow</p>
+  </div>
+  <div class="column interpolation-video-column">
+    <div id="interpolation-image-wrapper2" style="width: 175px;margin-left: 30px;margin-right: 30px;">
+      Loading...
+    </div>
+    <input class="slider is-fullwidth is-large is-info"
+           id="interpolation-slider2" style="left: 5px"
+           step="1" min="0" max="100" value="0" type="range">
+  </div>
+  <div class="column is-3 has-text-centered">
+    <img src="./static/images/interpolate_end2.jpg" style="width: 175px"
+         class="interpolation-image"
+         alt="Interpolation end reference image."/>
+    <p class="is-bold">High Smile</p>
+  </div>
+</div>
+
+
+<!-- New Images -->
+<div class="columns is-vcentered interpolation-panel"style="width: 769px; margin: 0 auto;">
+  <div class="column is-3 has-text-centered">
+    <img src="./static/images/interpolate_start3.jpg" style="width: 175px;"
+         class="interpolation-image"
+         alt="Interpolate start reference image."/>
+    <p>Bare Teeth</p>
+  </div>
+  <div class="column interpolation-video-column">
+    <div id="interpolation-image-wrapper3" style="width: 175px;margin-left: 30px;margin-right: 30px;">
+      Loading...
+    </div>
+    <input class="slider is-fullwidth is-large is-info"
+           id="interpolation-slider3" style="left: 5px"
+           step="1" min="0" max="100" value="0" type="range">
+  </div>
+  <div class="column is-3 has-text-centered">
+    <img src="./static/images/interpolate_end3.jpg" style="width: 175px"
+         class="interpolation-image"
+         alt="Interpolation end reference image."/>
+    <p class="is-bold">Mouth Down</p>
+  </div>
+</div>
+<br/>
+        <!--/ Interpolating. -->
+
+      </div>
+    </div>
+    <!--/ Animation. -->
+    
+    
+<section class="section" id="Adaptive_Weights">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3">Adaptive Weights</h2>
+    <p>Plotting its kernels via t-SNE highlights their adaptive behavior. <strong>Kernels are Vertex-Adaptive</strong>: Weights processing the same vertex are grouped in distinct clusters. <strong>Kernels are Mesh-Adaptive</strong>: Inside each group, a different response can be identified for every mesh.</p>
+     <div class="container" style= "display: flex; justify-content: center; width: 950px">
+        <figure class="image" style="margin-right: 10px; right: 50px;">
+            <img src="./static/images/paper/CoMA_tsne_vertex_mesh_adaptive_weights_02.jpg" alt="Image 1">
+            <figcaption style="text-align: center;">3D shape reconstruction with 3DMM</figcaption>
+        </figure>
+        <figure class="image" style="margin-left: 10px; margin-top: 0px; right:70px;">
+            <img src="./static/images/paper/CoMA_tsne_vertex_mesh_adaptive_weights_03.jpg" alt="Image 2">
+            <figcaption style="text-align: center;">3D shape correspondence </figcaption>
+        </figure>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="Adaptive_Receptive_Fields">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3">Adaptive Receptive Fields</h2>
+   
+
+ <div style="display: flex; justify-content: center; align-items: center; height: 600px">
+    <div style="display: flex; justify-content: space-between; height:600px">
+        <figure style="position: relative; top:32px">
+            <model-viewer id="model_1" style="height: 550px;" src="./static/meshes/faust_rf/body_ours_l1_spiral/body_ours_l1_spiral_repositioned.glb" camera-controls poster="poster.webp" shadow-intensity="1" min-camera-orbit="-180deg 90deg 4m" max-camera-orbit="180deg 90deg 4m" camera-orbit="0deg 0deg 4m" field-of-view="30deg" min-field-of-view="30deg">
+                <div class="progress-bar hide" slot="progress-bar">
+                    <div class="update-bar"></div>
+                </div>
+            </model-viewer>
+            <figcaption style="text-align: center;">Ours</br>Layer 1</figcaption>
+        </figure>
+
+        <figure>
+            <model-viewer id="model_2" style="height: 550px;" src="./static/meshes/faust_rf/body_ours_l2_spiral/body_ours_l2_spiral_repositioned.glb" camera-controls poster="poster.webp" shadow-intensity="1" min-camera-orbit="-180deg 90deg 4m" max-camera-orbit="180deg 90deg 4m" camera-orbit="0deg 0deg 4m" field-of-view="30deg" min-field-of-view="30deg" interaction-prompt="none">
+                <div class="progress-bar hide" slot="progress-bar">
+                    <div class="update-bar"></div>
+                </div>
+            </model-viewer>
+            <figcaption style="text-align: center;">Ours</br>Layer 2</figcaption>
+        </figure>
+
+        <figure>
+            <model-viewer id="model3" style="height: 550px;" src="./static/meshes/faust_rf/body_ours_l3_spiral/body_ours_l3_spiral_repositioned.glb" camera-controls poster="poster.webp" shadow-intensity="1" min-camera-orbit="-180deg 90deg 4m" max-camera-orbit="180deg 90deg 4m" camera-orbit="0deg 0deg 4m" field-of-view="30deg" min-field-of-view="30deg" interaction-prompt="none">
+                <div class="progress-bar hide" slot="progress-bar">
+                    <div class="update-bar"></div>
+                </div>
+            </model-viewer>
+            <figcaption style="text-align: center;">Ours</br>Layer 3</figcaption>
+        </figure>
+
+        <figure>
+            <model-viewer id="model_3" style="height: 550px;" src="./static/meshes/faust_rf/body_spiral/body_spiral_repositioned.glb" camera-controls poster="poster.webp" shadow-intensity="1" min-camera-orbit="-180deg 90deg 4m" max-camera-orbit="180deg 90deg 4m" camera-orbit="0deg 0deg 4m" field-of-view="30deg" min-field-of-view="30deg" interaction-prompt="none">
+                <div class="progress-bar hide" slot="progress-bar">
+                    <div class="update-bar"></div>
+                </div>
+            </model-viewer>
+            <figcaption style="text-align: center;">Spiral Conv</br>Layer 1-2-3</figcaption>
+        </figure>
+
+      </div>
+    </div>
+
+
+  </div>
+        <div class="content has-text-justified;" style="margin-top:70px">
+          <p>
+            Adaptive-Spiral predicts the length of the spiral for each mesh and vertex. Moreover, it automatically learns to enlarge the length of the spiral to learn hierarchical representations (receptive field increase from level 1 to level 3). Compared to our method, the original Spiral Convolution processing is limited to a small spiral of fixed length.
+          </p>
+        </div>
+</section>
+
+
+
+    <!-- Concurrent Work.
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Related Links</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            Adaptive-Spiral predicts the length of the spiral for each mesh and vertex. Moreover, it automatically learns to enlarge the length of the spiral to learn hierarchical representations ( receptive field increase from level 1 to level 3). Compared to our method, the original Spiral Convolution processing is limited to a small spiral of fixed length.
+          </p>
+        </div>
+      </div>
+    </div>
+    Concurrent Work. -->
+
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{babiloni2023adaptive,
+  author    = {Babiloni, Francesca and Maggioni, Matteo and Tanay, Thomas and Deng, Jiankang and Leonardis, Ales and Zafeiriou, Stefanos},
+  title     = {Adaptive Spiral Layers for Efficient 3D Representation Learning on Meshes},
+  journal   = {ICCV},
+  year      = {2023},
+}</code></pre>
+  </div>
+</section>
+
+  
+<footer class="footer">
+  <div class="container">
+    
+    <!-- 
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div> 
+    -->
+    
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
